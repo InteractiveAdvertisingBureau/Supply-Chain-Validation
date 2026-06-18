@@ -3,8 +3,8 @@
 This document consolidates three source references into a single implementation guide for publishers, SSPs, exchanges, DSPs, and ad servers implementing sellers.json, the SupplyChain object, and ads.txt inventory sharing.
 
 **Sources:**
-- [OpenRTB SupplyChain Object Specification](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/main/2.6.md#3225---object-supplychain-) — IAB Tech Lab
-- [OpenRTB Supply Chain Object Implementation (DEPRECATED](https://github.com/InteractiveAdvertisingBureau/openrtb/blob/main/supplychainobject.md)
+- [OpenRTB SupplyChain Object Specification](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/develop/2.6.md#3225---object-supplychain-) — IAB Tech Lab
+- [OpenRTB Supply Chain Object Implementation (DEPRECATED)](https://github.com/InteractiveAdvertisingBureau/openrtb/blob/main/supplychainobject.md)
 - [Ads.txt & App-ads.txt: Guidance for Inventory Sharing (Explainer Guide)](https://github.com/InteractiveAdvertisingBureau/Supply-Chain-Validation/blob/main/Explainer%20Guide.md) — IAB Tech Lab
 - FAQ for sellers.json and SupplyChain Object (July 2019, updated September 2020) — IAB Tech Lab
 
@@ -74,7 +74,7 @@ Together, these three mechanisms allow a DSP to answer: *Who authorized the sale
 
 ## OpenRTB SupplyChain Object Specification
 
-*Source: [IAB Tech Lab OpenRTB SupplyChain Object](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/main/2.6.md#3225---object-supplychain-)*
+*Source: [IAB Tech Lab OpenRTB SupplyChain Object](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/develop/2.6.md#3225---object-supplychain-)*
 
 As part of a broader effort to eliminate the ability to profit from invalid traffic, ad fraud, and counterfeit inventory in the open digital advertising ecosystem, the SupplyChain object enables buyers to see all parties who have taken custody of a bid request.
 
