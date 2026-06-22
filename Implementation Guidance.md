@@ -265,9 +265,9 @@ The server-side wrapper has a client-side JS component but processes and forward
   "sellers": [
     {
       "seller_id": "ssw-ssp-001",
-      "name": "Server-Side Wrapper",
-      "domain": "server-side-wrapper.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example Publisher LLC",
+      "domain": "publishersite.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -277,7 +277,7 @@ The server-side wrapper has a client-side JS component but processes and forward
 
 ### WEB-2: Device > Open Bidding Provider > SSP > DSP
 
-The open bidding provider sits between the device and the SSP, routing the request server-side. hp=0 because the SSP pays the open bidding provider, not the publisher directly.
+The open bidding provider sits between the device and the SSP, routing the request server-side. hp=0 because the SSP pays the publisher directly.
 
 #### OpenRTB 2.6 schain object
 
@@ -330,9 +330,9 @@ The open bidding provider sits between the device and the SSP, routing the reque
   "sellers": [
     {
       "seller_id": "obp-ssp-001",
-      "name": "Open Bidding Provider",
-      "domain": "open-bidding-provider.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example Publisher LLC",
+      "domain": "publishersite.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -407,6 +407,7 @@ Two wrapper layers. The client-side wrapper initiates from the browser (hp=0 —
   ]
 }
 ```
+The client side wrapper is controlled by the publisher, the server-side wrapper is controlled by the client side wrapper company. 
 
 #### ssp.com/sellers.json
 
@@ -417,9 +418,9 @@ Two wrapper layers. The client-side wrapper initiates from the browser (hp=0 —
   "sellers": [
     {
       "seller_id": "ssw-ssp-002",
-      "name": "Server-Side Wrapper",
-      "domain": "server-side-wrapper.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example Publisher LLC",
+      "domain": "publishersite.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -441,11 +442,6 @@ The publisher's own domain initiates the Prebid request directly. Publisher is n
       "complete": 1,
       "nodes": [
         {
-          "asi": "publishersite.com",
-          "sid": "pub-direct-001",
-          "hp": 0
-        },
-        {
           "asi": "ssp.com",
           "sid": "pub-ssp-001",
           "hp": 1
@@ -455,23 +451,7 @@ The publisher's own domain initiates the Prebid request directly. Publisher is n
   }
 }
 ```
-
-#### publishersite.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@publishersite.com",
-  "sellers": [
-    {
-      "seller_id": "pub-direct-001",
-      "name": "Example Publisher LLC",
-      "domain": "publishersite.com",
-      "seller_type": "PUBLISHER"
-    }
-  ]
-}
-```
+The publisher controlls the client side wrapper, so no hp=0 node is required.
 
 #### ssp.com/sellers.json
 
@@ -637,8 +617,7 @@ The publisher ad management platform's JS initiates the request (hp=1 — in pay
       "seller_id": "yoi-ssp-001",
       "name": "Publisher Ad Management Platform (via Yield Optimization Intermediary)",
       "domain": "publisher-ad-management-platform.com",
-      "seller_type": "INTERMEDIARY",
-      "custodian": "yield-optimization-intermediary.com"
+      "seller_type": "INTERMEDIARY"
     }
   ]
 }
@@ -693,9 +672,9 @@ The mobile SDK does two jobs: client-side connection and initial payload constru
 
 ---
 
-### MOB-2: Client Device > Mobile SDK > SSP > DSP (Classic resell)
+### MOB-2: Client Device > Mobile SDK > SSP > DSP 
 
-Classic reselling. DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app developer. No hp=0 nodes — every node is in the payment chain.
+DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app developer. No hp=0 nodes — every node is in the payment chain.
 
 #### OpenRTB 2.6 schain object
 
@@ -758,9 +737,9 @@ Classic reselling. DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app de
 
 ---
 
-### MOB-3: Client Device > Mobile SDK > SSP > DSP (SDK Renting)
+### MOB-3: Client Device > Mobile SDK > SSP > DSP 
 
-SDK renting: the SSP pays the publisher directly, bypassing the SDK in the payment chain. Mobile SDK is hp=0 — it facilitates the request but is not paid for media by the SSP.
+The SSP pays the publisher directly, bypassing the SDK in the payment chain. Mobile SDK is hp=0 — it facilitates the request but is not paid for media by the SSP.
 
 #### OpenRTB 2.6 schain object
 
@@ -800,7 +779,7 @@ SDK renting: the SSP pays the publisher directly, bypassing the SDK in the payme
       "domain": "appdeveloper.com",
       "seller_type": "PUBLISHER",
       "is_passthrough": 1,
-      "comment": "SSP pays publisher directly. Must establish account relationship with publisher to transact."
+      "comment": "SSP pays publisher directly. Account relationship with publisher exists in order to transact."
     }
   ]
 }
@@ -889,13 +868,14 @@ SSAI platform stitches ads server-side (hp=0). CTV ad server manages the auction
   "sellers": [
     {
       "seller_id": "cas-ssai-001",
-      "name": "SSAI Platform",
-      "domain": "ssai-platform.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example CTV Publisher LLC",
+      "domain": "ctvpublisher.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
 ```
+The publisehr controls the account with the SSAI platform and with the ad server, so it is listed as such in both the ssai and ad server sellers.json.
 
 #### ssp.com/sellers.json
 
@@ -906,59 +886,6 @@ SSAI platform stitches ads server-side (hp=0). CTV ad server manages the auction
   "sellers": [
     {
       "seller_id": "cas-ssp-001",
-      "name": "CTV Ad Server",
-      "domain": "ctv-ad-server.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
----
-
-### CTV-2: Device > Pure SSAI Vendor > CTV Ad Server > SSP > DSP
-
-Same shape as CTV-1. Confirms the framework treats single-purpose SSAI vendors the same as cloud-platform SSAIs.
-
-#### OpenRTB 2.6 schain object
-
-```json
-{
-  "source": {
-    "schain": {
-      "ver": "1.0",
-      "complete": 1,
-      "nodes": [
-        {
-          "asi": "pure-ssai-vendor.com",
-          "sid": "pssai-pub-001",
-          "hp": 0
-        },
-        {
-          "asi": "ctv-ad-server.com",
-          "sid": "cas-pssai-001",
-          "hp": 0
-        },
-        {
-          "asi": "ssp.com",
-          "sid": "cas-ssp-002",
-          "hp": 1
-        }
-      ]
-    }
-  }
-}
-```
-
-#### pure-ssai-vendor.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@pure-ssai-vendor.com",
-  "sellers": [
-    {
-      "seller_id": "pssai-pub-001",
       "name": "Example CTV Publisher LLC",
       "domain": "ctvpublisher.com",
       "seller_type": "PUBLISHER"
@@ -967,43 +894,9 @@ Same shape as CTV-1. Confirms the framework treats single-purpose SSAI vendors t
 }
 ```
 
-#### ctv-ad-server.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@ctv-ad-server.com",
-  "sellers": [
-    {
-      "seller_id": "cas-pssai-001",
-      "name": "Pure SSAI Vendor",
-      "domain": "pure-ssai-vendor.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
-#### ssp.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@ssp.com",
-  "sellers": [
-    {
-      "seller_id": "cas-ssp-002",
-      "name": "CTV Ad Server",
-      "domain": "ctv-ad-server.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
 ---
 
-### CTV-3: Device > SSAI + Ad Server (Same Operator) > SSP > DSP
+### CTV-2: Device > SSAI + Ad Server (Same Operator) > SSP > DSP
 
 SSAI and ad server are operated by the same company. They collapse into a single node. hp=0 because they do not pay the publisher — the SSP does.
 
@@ -1058,9 +951,9 @@ SSAI and ad server are operated by the same company. They collapse into a single
   "sellers": [
     {
       "seller_id": "saso-ssp-001",
-      "name": "SSAI and Ad Server Operator",
-      "domain": "ssai-and-ad-server-operator.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example CTV Publisher LLC",
+      "domain": "ctvpublisher.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1068,7 +961,7 @@ SSAI and ad server are operated by the same company. They collapse into a single
 
 ---
 
-### CTV-4: Device > Publisher-Owned SSAI > Primary Ad Server > Content Owner Ad Server > SSP > DSP
+### CTV-3: Device > Publisher-Owned SSAI > Primary Ad Server > Content Owner Ad Server > SSP > DSP
 
 Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp=0). Content owner ad server is called to honor right of first refusal on content owner inventory (hp=0). SSP pays the publisher (hp=1).
 
@@ -1106,6 +999,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
   }
 }
 ```
+*Open question for public comment: Should the publisher-owned-ssai be listed as the first node?*
 
 #### publisher-owned-ssai.com/sellers.json
 
@@ -1133,9 +1027,9 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
   "sellers": [
     {
       "seller_id": "pas-possai-001",
-      "name": "Publisher-Owned SSAI",
-      "domain": "publisher-owned-ssai.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example App Owner LLC",
+      "domain": "appowner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1150,9 +1044,9 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
   "sellers": [
     {
       "seller_id": "coas-pas-001",
-      "name": "Primary Ad Server",
-      "domain": "primary-ad-server.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example Content Owner LLC",
+      "domain": "contentowner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1167,9 +1061,9 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
   "sellers": [
     {
       "seller_id": "coas-ssp-001",
-      "name": "Content Owner Ad Server",
-      "domain": "content-owner-ad-server.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example Content Owner LLC",
+      "domain": "contentowner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1177,9 +1071,9 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 
 ---
 
-### CTV-5a: Device > SSAI > App Owner Ad Server > SSP > DSP (App Owner path — inventory share)
+### CTV-4a: Device > SSAI > App Owner Ad Server > SSP > DSP (App Owner path — inventory share)
 
-One of two parallel bid requests generated from the same ad break. This path represents the app owner's inventory share. The originating SSAI is the same in both CTV-5a and CTV-5b, but the ad server and seller differ.
+One of two parallel bid requests generated from the same ad break. This path represents the app owner's inventory share. The originating SSAI is the same in both CTV-4a and CTV-4b, but the ad server and seller differ.
 
 #### OpenRTB 2.6 schain object
 
@@ -1223,16 +1117,7 @@ One of two parallel bid requests generated from the same ad break. This path rep
       "name": "Example App Owner LLC",
       "domain": "appowner.com",
       "seller_type": "PUBLISHER"
-    },
-    {
-      "seller_id": "ssaiv-invpartner-001",
-      "name": "Inventory Share Partner LLC",
-      "domain": "inventorypartner.com",
-      "seller_type": "PUBLISHER",
-      "comment": "Inventory share partner path — see CTV-5b"
     }
-  ]
-}
 ```
 
 #### app-owner-ad-server.com/sellers.json
@@ -1244,9 +1129,9 @@ One of two parallel bid requests generated from the same ad break. This path rep
   "sellers": [
     {
       "seller_id": "aoas-ssaiv-001",
-      "name": "SSAI Vendor",
-      "domain": "ssai-vendor.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example App Owner LLC",
+      "domain": "appowner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1261,9 +1146,9 @@ One of two parallel bid requests generated from the same ad break. This path rep
   "sellers": [
     {
       "seller_id": "aoas-ssp-001",
-      "name": "App Owner Ad Server",
-      "domain": "app-owner-ad-server.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example App Owner LLC",
+      "domain": "appowner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1271,9 +1156,9 @@ One of two parallel bid requests generated from the same ad break. This path rep
 
 ---
 
-### CTV-5b: Device > SSAI > Inventory Share Partner Ad Server > SSP > DSP (Inventory share partner path)
+### CTV-4b: Device > SSAI > Inventory Share Partner Ad Server > SSP > DSP (Inventory share partner path)
 
-Second of two parallel bid requests from the same ad break. Same SSAI originator as CTV-5a, different ad server and seller — representing the inventory share partner's portion of the pod.
+Second of two parallel bid requests from the same ad break. Same SSAI originator as CTV-4a, different ad server and seller — representing the inventory share partner's portion of the pod.
 
 #### OpenRTB 2.6 schain object
 
@@ -1304,6 +1189,20 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
   }
 }
 ```
+#### ssai-vendor.com/sellers.json
+
+```json
+{
+  "version": "1.0",
+  "contact_email": "adops@ssai-vendor.com",
+  "sellers": [
+    {
+      "seller_id": "ssaiv-appowner-001",
+      "name": "Example App Owner LLC",
+      "domain": "appowner.com",
+      "seller_type": "PUBLISHER"
+    }
+```
 
 #### inventory-share-partner-ad-server.com/sellers.json
 
@@ -1314,15 +1213,15 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
   "sellers": [
     {
       "seller_id": "ispas-ssaiv-001",
-      "name": "SSAI Vendor",
-      "domain": "ssai-vendor.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Inventory Share Partner LLC",
+      "domain": "inventorysharepartner.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
 ```
 
-#### ssp.com/sellers.json (addendum for CTV-5b)
+#### ssp.com/sellers.json (addendum for CTV-4b)
 
 ```json
 {
@@ -1331,128 +1230,18 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
   "sellers": [
     {
       "seller_id": "ispas-ssp-001",
-      "name": "Inventory Share Partner Ad Server",
-      "domain": "inventory-share-partner-ad-server.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
----
-
-### CTV-6: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP
-
-Three custodians precede the SSP. SSAI platform generates the initial payload (hp=0). Content owner ad server holds custody next (hp=0). Primary CTV ad server (the INVENTORYPARTNERDOMAIN entity) then initiates the SSP auction (hp=0). SSP pays the publisher (hp=1).
-
-#### OpenRTB 2.6 schain object
-
-```json
-{
-  "source": {
-    "schain": {
-      "ver": "1.0",
-      "complete": 1,
-      "nodes": [
-        {
-          "asi": "ssai-platform.com",
-          "sid": "ssaip-pub-002",
-          "hp": 0
-        },
-        {
-          "asi": "content-owner-ad-server.com",
-          "sid": "coas-ssaip-001",
-          "hp": 0
-        },
-        {
-          "asi": "primary-ctv-ad-server.com",
-          "sid": "pcas-coas-001",
-          "hp": 0
-        },
-        {
-          "asi": "ssp.com",
-          "sid": "pcas-ssp-001",
-          "hp": 1
-        }
-      ]
-    }
-  }
-}
-```
-
-#### ssai-platform.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@ssai-platform.com",
-  "sellers": [
-    {
-      "seller_id": "ssaip-pub-002",
-      "name": "Example CTV Publisher LLC",
-      "domain": "ctvpublisher.com",
+      "name": "Inventory Share Partner LLC",
+      "domain": "inventorysharepartner.com",
       "seller_type": "PUBLISHER"
     }
   ]
 }
 ```
-
-#### content-owner-ad-server.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@content-owner-ad-server.com",
-  "sellers": [
-    {
-      "seller_id": "coas-ssaip-001",
-      "name": "SSAI Platform",
-      "domain": "ssai-platform.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
-#### primary-ctv-ad-server.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@primary-ctv-ad-server.com",
-  "sellers": [
-    {
-      "seller_id": "pcas-coas-001",
-      "name": "Content Owner Ad Server",
-      "domain": "content-owner-ad-server.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
-#### ssp.com/sellers.json
-
-```json
-{
-  "version": "1.0",
-  "contact_email": "adops@ssp.com",
-  "sellers": [
-    {
-      "seller_id": "pcas-ssp-001",
-      "name": "Primary CTV Ad Server",
-      "domain": "primary-ctv-ad-server.com",
-      "seller_type": "INTERMEDIARY"
-    }
-  ]
-}
-```
-
 ---
 
-### CTV-7: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP (Sequential Ad Server Connections)
+### CTV-5: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP (Sequential Ad Server Connections)
 
-Identical node shape to CTV-6. The distinction is architectural: the primary ad server forwards to a secondary ad server to access differentiated demand in a single sequential chain, rather than parallel fan-out. One bid request, both ad servers as sequential nodes in a single schain.
+The primary ad server forwards to a secondary ad server to access differentiated demand in a single sequential chain, rather than parallel fan-out. One bid request, both ad servers as sequential nodes in a single schain.
 
 #### OpenRTB 2.6 schain object
 
@@ -1488,12 +1277,70 @@ Identical node shape to CTV-6. The distinction is architectural: the primary ad 
   }
 }
 ```
-
-> sellers.json entries for CTV-7 follow the same structure as CTV-6 with updated sid references. Each ASI's sellers.json lists the entity upstream of it as either PUBLISHER or INTERMEDIARY per the same logic.
-
 ---
+#### ssai-platform.com/sellers.json
 
-### CTV-8: Device > SSAI Platform > Primary CTV Ad Server > SSP-1 > SSP-2 > DSP (SSP Chaining)
+```json
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "ssaip-pub-003",
+      "name": "Example App Owner LLC",
+      "domain": "appowner.com",
+      "seller_type": "PUBLISHER"
+    }
+  ]
+}
+```
+#### content-owner-ad-server.com/sellers.json
+
+```json
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "coas-ssaip-002",
+      "name": "Example Content Owner LLC",
+      "domain": "contentowner.com",
+      "seller_type": "PUBLISHER"
+    }
+  ]
+}
+```
+#### primary-ctv-ad-server.com/sellers.json
+
+```json
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "pcas-coas-002",
+      "name": "Example Content Owner LLC",
+      "domain": "contentowner.com",
+      "seller_type": "PUBLISHER"
+    }
+  ]
+}
+```
+#### content-owner-ad-server.com/sellers.json
+
+```json
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "ispas-ssp-001",
+      "name": "Example Content Owner LLC",
+      "domain": "contentowner.com",
+      "seller_type": "PUBLISHER"
+    }
+  ]
+}
+```
+
+
+### CTV-6: Device > SSAI Platform > Primary CTV Ad Server > SSP-1 > SSP-2 > DSP (SSP Chaining)
 
 SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are hp=1 — both are in the payment chain. SSP-2 pays SSP-1 pays the publisher.
 
@@ -1558,9 +1405,9 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
   "sellers": [
     {
       "seller_id": "pcas-ssaip-001",
-      "name": "SSAI Platform",
-      "domain": "ssai-platform.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example CTV Publisher LLC",
+      "domain": "ctvpublisher.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
@@ -1575,9 +1422,9 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
   "sellers": [
     {
       "seller_id": "ssp1-pcas-001",
-      "name": "Primary CTV Ad Server",
-      "domain": "primary-ctv-ad-server.com",
-      "seller_type": "INTERMEDIARY"
+      "name": "Example CTV Publisher LLC",
+      "domain": "ctvpublisher.com",
+      "seller_type": "PUBLISHER"
     }
   ]
 }
