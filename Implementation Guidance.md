@@ -26,7 +26,7 @@ This document consolidates three source references into a single implementation 
      - [WEB-6: Device > Publisher Ad Management JS > Yield Optimization Intermediary > SSP > DSP](#web-6-device--publisher-ad-management-js--yield-optimization-intermediary--ssp--dsp)
      - [MOB-1: Client Device > Mobile SDK > DSP](#mob-1-client-device--mobile-sdk--dsp)
      - [MOB-2: Client Device > Mobile SDK > SSP > DSP (Classic Resell)](#mob-2-client-device--mobile-sdk--ssp--dsp)
-     - [MOB-3: Client Device > Mobile SDK > SSP > DSP](#mob-3-client-device--mobile-sdk--ssp--dsp-1)
+     - [MOB-3: Client Device > Mobile SDK > SSP > DSP](#mob-3-client-device--mobile-sdk--ssp--dsp)
      - [CTV-1: Device > SSAI Platform > CTV Ad Server > SSP > DSP](#ctv-1-device--ssai-platform--ctv-ad-server--ssp--dsp-canonical-single-path)
      - [CTV-2: Device > SSAI + Ad Server (Same Operator) > SSP > DSP](#ctv-2-device--ssai--ad-server-same-operator--ssp--dsp)
      - [CTV-3: Device > Publisher-Owned SSAI > Primary Ad Server > Content Owner Ad Server > SSP > DSP](#ctv-3-device--publisher-owned-ssai--primary-ad-server--content-owner-ad-server--ssp--dsp)
