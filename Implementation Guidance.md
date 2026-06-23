@@ -11,12 +11,13 @@ This document consolidates three source references into a single implementation 
 ---
 
 ## Table of Contents
+## Table of Contents
 1. [Overview](#1-overview)
 2. [OpenRTB SupplyChain Object Specification](#openrtb-supplychain-object-specification)
    - [Implementation Rules](#openrtb-supply-chain-object-implementation-rules)
    - [Placement in the Bid Request](#placement-in-the-bid-request)
-   - [OpenRTB Examples — Version 1.0](#openrtb-examples---version-10)
-   - [OpenRTB Examples — Version 1.1](#openrtb-examples---version-11)
+   - [Examples — Version 1.0](#openrtb-examples---version-10)
+   - [Examples — Version 1.1](#openrtb-examples---version-11)
      - [WEB-1: Device > Server-Side Header Bidding Wrapper > SSP > DSP](#web-1-device--server-side-header-bidding-wrapper--ssp--dsp)
      - [WEB-2: Device > Open Bidding Provider > SSP > DSP](#web-2-device--open-bidding-provider--ssp--dsp)
      - [WEB-3: Device > Client-Side Wrapper > Server-Side Header Bidding Wrapper > SSP > DSP](#web-3-device--client-side-wrapper--server-side-header-bidding-wrapper--ssp--dsp)
@@ -24,17 +25,15 @@ This document consolidates three source references into a single implementation 
      - [WEB-5: Device > Publisher Ad Management JS > Publisher Ad Management Server > SSP > DSP](#web-5-device--publisher-ad-management-js--publisher-ad-management-server--ssp--dsp)
      - [WEB-6: Device > Publisher Ad Management JS > Yield Optimization Intermediary > SSP > DSP](#web-6-device--publisher-ad-management-js--yield-optimization-intermediary--ssp--dsp)
      - [MOB-1: Client Device > Mobile SDK > DSP](#mob-1-client-device--mobile-sdk--dsp)
-     - [MOB-2: Client Device > Mobile SDK > SSP > DSP (Classic Resell)](#mob-2-client-device--mobile-sdk--ssp--dsp-classic-resell)
-     - [MOB-3: Client Device > Mobile SDK > SSP > DSP (SDK Renting)](#mob-3-client-device--mobile-sdk--ssp--dsp-sdk-renting)
+     - [MOB-2: Client Device > Mobile SDK > SSP > DSP (Classic Resell)](#mob-2-client-device--mobile-sdk--ssp--dsp)
+     - [MOB-3: Client Device > Mobile SDK > SSP > DSP](#mob-3-client-device--mobile-sdk--ssp--dsp-1)
      - [CTV-1: Device > SSAI Platform > CTV Ad Server > SSP > DSP](#ctv-1-device--ssai-platform--ctv-ad-server--ssp--dsp-canonical-single-path)
-     - [CTV-2: Device > Pure SSAI Vendor > CTV Ad Server > SSP > DSP](#ctv-2-device--pure-ssai-vendor--ctv-ad-server--ssp--dsp)
-     - [CTV-3: Device > SSAI + Ad Server (Same Operator) > SSP > DSP](#ctv-3-device--ssai--ad-server-same-operator--ssp--dsp)
-     - [CTV-4: Device > Publisher-Owned SSAI > Primary Ad Server > Content Owner Ad Server > SSP > DSP](#ctv-4-device--publisher-owned-ssai--primary-ad-server--content-owner-ad-server--ssp--dsp)
-     - [CTV-5a: Device > SSAI > App Owner Ad Server > SSP > DSP (App Owner Path)](#ctv-5a-device--ssai--app-owner-ad-server--ssp--dsp-app-owner-path--inventory-share)
-     - [CTV-5b: Device > SSAI > Inventory Share Partner Ad Server > SSP > DSP](#ctv-5b-device--ssai--inventory-share-partner-ad-server--ssp--dsp-inventory-share-partner-path)
-     - [CTV-6: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP](#ctv-6-device--ssai-platform--content-owner-ad-server--primary-ctv-ad-server--ssp--dsp)
-     - [CTV-7: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP (Sequential)](#ctv-7-device--ssai-platform--content-owner-ad-server--primary-ctv-ad-server--ssp--dsp-sequential-ad-server-connections)
-     - [CTV-8: Device > SSAI Platform > Primary CTV Ad Server > SSP-1 > SSP-2 > DSP (SSP Chaining)](#ctv-8-device--ssai-platform--primary-ctv-ad-server--ssp-1--ssp-2--dsp-ssp-chaining)
+     - [CTV-2: Device > SSAI + Ad Server (Same Operator) > SSP > DSP](#ctv-2-device--ssai--ad-server-same-operator--ssp--dsp)
+     - [CTV-3: Device > Publisher-Owned SSAI > Primary Ad Server > Content Owner Ad Server > SSP > DSP](#ctv-3-device--publisher-owned-ssai--primary-ad-server--content-owner-ad-server--ssp--dsp)
+     - [CTV-4a: Device > SSAI > App Owner Ad Server > SSP > DSP (App Owner Path)](#ctv-4a-device--ssai--app-owner-ad-server--ssp--dsp-app-owner-path--inventory-share)
+     - [CTV-4b: Device > SSAI > Inventory Share Partner Ad Server > SSP > DSP](#ctv-4b-device--ssai--inventory-share-partner-ad-server--ssp--dsp-inventory-share-partner-path)
+     - [CTV-5: Device > SSAI Platform > Content Owner Ad Server > Primary CTV Ad Server > SSP > DSP (Sequential)](#ctv-5-device--ssai-platform--content-owner-ad-server--primary-ctv-ad-server--ssp--dsp-sequential-ad-server-connections)
+     - [CTV-6: Device > SSAI Platform > Primary CTV Ad Server > SSP-1 > SSP-2 > DSP (SSP Chaining)](#ctv-6-device--ssai-platform--primary-ctv-ad-server--ssp-1--ssp-2--dsp-ssp-chaining)
    - [Non-OpenRTB Tag Serialization](#26-non-openrtb-tag-serialization)
 3. [Inventory Sharing: Ads.txt & App-ads.txt Explainer](#3-inventory-sharing-adstxt--app-adstxt-explainer)
    - [Background](#31-background)
@@ -55,7 +54,6 @@ This document consolidates three source references into a single implementation 
    - [Setting is_passthrough](#49-setting-is_passthrough)
    - [Header Bidding](#410-header-bidding)
    - [Worked Examples](#411-worked-examples)
-
 ---
 
 ## 1. Overview
