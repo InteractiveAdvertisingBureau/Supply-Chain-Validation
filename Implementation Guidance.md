@@ -1471,50 +1471,80 @@ If any property value contains a comma or bang character, it must be URL encoded
 
 ## 3. Inventory Sharing: Ads.txt & App-ads.txt Explainer
 
+*Source: [IAB Tech Lab — ads.txt & app-ads.txt: Guidance for Inventory Sharing](https://github.com/InteractiveAdvertisingBureau/Supply-Chain-Validation/blob/dev/Explainer%20Guide.md)*
+
 ### 3.1 Background
 
-The Connected TV market introduces a much higher occurrence of complex monetization relationships that make ads.txt & app-ads.txt, as currently designed, insufficient for broader adoption. These guidelines and spec enhancements are intended to more seamlessly support sites and apps in which multiple entities may have ownership rights over the ad space — commonly referred to as **inventory sharing**.
+The Connected TV market introduces a much higher occurrence of complex monetization relationships that make ads.txt & app-ads.txt, as currently designed, insufficient for broader adoption. *(It is important to note that these relationships are not unique to the CTV environment or OTT content delivery, however, the much higher occurrence of these relationships in CTV/OTT contexts rendered this problem in particular need of resolution.)* These guidelines & spec enhancements are intended to more seamlessly support sites & apps in which multiple entities may have ownership rights over the ad space, commonly referred to as **inventory sharing**. In OTT, these situations often arise from relationships such as content distribution (MVPDs or vMVPDs) or as a result of various carriage agreements (TV Everywhere). Ultimately, nearly all relationships can be simplified into the case where *some business entity, other than the app/site owner, has ownership over some ad space within the app/site and the right to sell that inventory.*
 
-In OTT, these situations often arise from content distribution relationships (MVPDs or vMVPDs) or various carriage agreements (TV Everywhere). Nearly all such relationships can be simplified to: *some business entity, other than the app/site owner, has ownership over some ad space within the app/site and the right to sell that inventory.*
+A simple example of one such situation is a content distributor such as a vMVPD app. In these content distribution agreements, one entity, a content producer/programmer A, gives rights to a content distributor B, to rebroadcast their content. As part of the agreement, both A & B have ownership of some portion of ad inventory delivered into the streamed content (the inventory is "shared"). By using the word "ownership", we imply that both A & B may legitimately originate an ad request inside an app that will be propagated into the programmatic ecosystem.
 
-In the previous version of ads.txt & app-ads.txt, declaring this relationship would require the app/site owner to maintain their file with the publisher IDs of all partners (and their resellers) with whom they have negotiated inventory ownership rights — making many files prohibitively difficult to maintain. The updated standard instead allows the app/site to point to a partner domain whose ads.txt or app-ads.txt file is authoritative for that partner's inventory.
+In the current ads.txt & app-ads.txt standard, declaring this relationship would require the vMVPD app to authorize Programmer A in their app-ads.txt file, along with the programmers' authorized seller and reseller information. This increases the cost of generating and maintaining an app-ads.txt file, and incrementally decreases the security benefit of the standard as the number of authorized sellers grows.
+
+It is these scenarios that the Ads.txt & App-ads.txt for Inventory Sharing guidelines for CTV/OTT are intended to define and validate.
 
 ### 3.2 Scope
 
-**In scope:**
-- **Inventory sharing** relationships, where different entities (app/site owner, content owner) may have the right to sell ad space within a piece of content on a given app/site.
-- Addressing basic misrepresentations of publishers' ownership of (and rights to sell) inventory on an app/site.
+#### In Scope
 
-**Out of scope:**
-- **Revenue sharing** scenarios where one entity owns and sells all inventory and shares proceeds with content owners (e.g. YouTube model). Only one entity owns/sells the inventory; this is not inventory sharing.
-- Content rights ownership, exclusivity, or inventory ownership within specific shows or programming.
+**Business relationships:** This solution covers **inventory sharing** relationships, where different entities (app/site owner, content owner) may have the right to sell ad space within a piece of content on a given app/site.
+
+**Potential abuse vectors:** This solution is intended to address basic misrepresentations of publishers' ownership of (and rights to sell) inventory on an app/site; answering the question:
+
+*"Does publisher A have ownership of (and rights to sell) some inventory on app/site B?"*
+
+#### Out of Scope
+
+**Business relationships:** This solution does not cover **revenue sharing** scenarios, where one entity owns & sells the ad inventory associated with content provided by a content owner (e.g., YouTube, DailyMotion). The owning entity may share revenue generated from ad sales back with the content owners, but ultimately there is only one entity owning/selling the ad inventory.
+
+**Potential abuse vectors:** This solution does not address additional aspects of content rights ownership or media rights management such as exclusivity or inventory ownership within specific content/shows. We are not attempting to answer:
+
+*"Does publisher A have rights to sell inventory within this specific TV show or programming?"*
+
+**OR**
+
+*"Does app/site C have the exclusive rights to deliver/stream a specific TV show or programming?"*
+
+While these concepts are increasingly important, especially in the space of Connected TV and OTT streaming, they will require new solutions being developed.
 
 > **MANAGERDOMAIN vs. INVENTORYPARTNERDOMAIN:** `MANAGERDOMAIN` represents a primary or exclusive programmatic seller of a publisher's inventory and is the most direct path to that inventory. Managers participate in the transaction as revenue-share intermediaries and are expected to appear in the schain as the terminal node. `INVENTORYPARTNERDOMAIN` represents a company that owns or has the right to sell a portion of ads on the underlying app — they are the final payee and receive all proceeds from their share of inventory. `INVENTORYPARTNERDOMAIN` is primarily intended for CTV/OTT inventory sharing.
 
 ### 3.3 Updates to the Standard
 
-The ads.txt & app-ads.txt specs have been updated to include the ability to designate another domain that can validate the publisher ID of the bid request. These domains are passed in the OpenRTB bid request via:
+In the previous version of ads.txt & app-ads.txt, supporting these scenarios would have required the app/site owner/developer to maintain their ads.txt/app-ads.txt file with the publisher IDs of all the partners (and their resellers) with whom they have negotiated some share of inventory ownership rights — making many ads.txt/app-ads.txt files prohibitively difficult to maintain. Note that moving to this method means that the publisher accepts all entries in the partner's ads.txt/app-ads.txt file as authorized to sell their inventory and assumes the risk of any changes to that file with or without their knowledge.
+
+Instead, the ads.txt & app-ads.txt specs have been updated to include the ability to designate another domain (aside from the app/site developer's) that is able to validate the publisher ID of the bid request. These domains are to be passed through site and app objects in the OpenRTB spec:
 
 - `app.inventorypartnerdomain`
+
+  OR
+
 - `site.inventorypartnerdomain`
 
-The corresponding declaration in the app/site owner's ads.txt or app-ads.txt file:
+To validate these domains, the [(app)ads.txt spec](https://iabtechlab.com/ads-txt/) also includes the following additional declaration in ads.txt & app-ads.txt files, intended to be entered by the owner of the app/site:
 
 | Variable | Value | Description |
 |---|---|---|
-| `inventorypartnerdomain` | Domain of the partner with ownership of some inventory on this site/app | When a site or app contains ad inventory owned by another partner, list all such partner domains via this directive. The partner's ads.txt or app-ads.txt will be hosted at the declared domain. |
+| `inventorypartnerdomain` | Pointer to the domain of the partner (of the site/app owner) with ownership of some portion of ad inventory on the site/app. The partner's ads.txt or app-ads.txt file will be hosted here. | When a site or an app contains ad inventory that is owned by another partner — the app or site should list all domains for those partners via this directive. |
 
 ### 3.4 Example Use Cases
 
 **Definitions:**
-- **Programmer A** — Content owner or content developer (e.g. broadcaster, streaming studio)
-- **(v)MVPD** — (Virtual) Multichannel Video Programming Distributor / content distributor
+
+- **Programmer A** — Content owner or content developer. Examples: ESPN, CBS, NBC, Crackle, Tastemade, Sky (UK), TF1 (FR), RTL (DE and NL), SBS (AU), Channel 9 (AU), Nippon TV (JP).
+- **(v)MVPD** — (Virtual) Multichannel Video Programming Distributor / Content distributor (monetizing partner, doesn't always have ownership over user-facing content). Examples: Sling TV, Pluto TV, YouTube TV, The Roku Channel, Fubo, Comcast, Sky (UK), Virgin Media (UK), Orange Télécom (FR), Bouygues Télécom (FR), Foxtel (AU).
 
 #### Case A: Programmer-Owned App
 
-All inventory is produced and sold by Programmer A in their own app via their chosen SSPs. This does not differ from the current app-ads.txt authorization model.
+**Business scenario:** All of the inventory is being produced and sold by Programmer A, in their owned app, via their chosen SSPs. This is the most straightforward example of OTT inventory and does not differ from the current app-ads.txt authorization model.
 
-**OpenRTB declaration (by Programmer A):**
+- **App:** Programmer A App (app bundle ID: 12345)
+- **Developer URL domain for the app:** devsite.programmerA.com
+- **Seller/Publisher:** Programmer A (publisher ID: abcde)
+- **Content Producer:** Programmer A
+
+**OpenRTB Declaration (by Programmer A):**
+
 ```json
 {
   "app": {
@@ -1528,19 +1558,28 @@ All inventory is produced and sold by Programmer A in their own app via their ch
 ```
 
 **Programmer A app-ads.txt** (`devsite.programmerA.com/app-ads.txt`):
+
 ```
-ssp.com, abcde, DIRECT
+ssp.com, abcde, DIRECT, *
 ```
+
+*\* The "Certification Authority ID" field may also be included in ads.txt & app-ads.txt files, but is optional and omitted from subsequent examples for brevity.*
 
 #### Case B: Content Channel on vMVPD App
 
-Two business scenarios arise depending on who has the right to sell the ad slot.
+In this case, two different ways that authorization for ads running against licensed content appearing inside a vMVPD app may appear in bid requests and app-ads.txt & ads.txt files are presented as Business Scenarios B.1 and B.2.
 
-**Scenario B.1 — vMVPD sells the slot (content ownership blinded):**
+##### Business Scenario B.1
 
-This does not differ from the current app-ads.txt model.
+vMVPD B has rights to sell the ad slot; the ad is served into Programmer A's content within the vMVPD B app. Information about the content ownership (i.e., the content is owned by Programmer A) is "blinded" — not declared in the bid request. This is similar to Case A (app owner selling inventory on their app without specific content declaration) and does not differ from the current app-ads.txt authorization model.
 
-**OpenRTB declaration (by vMVPD B):**
+- **App:** vMVPD B App (app bundle ID: 67890)
+- **Developer URL domain for the app:** devsite.vMVPDB.com
+- **Seller/Publisher:** vMVPD B (publisher ID: vwxyz)
+- **Content Producer:** Programmer A
+
+**OpenRTB Declaration (by vMVPD B):**
+
 ```json
 {
   "app": {
@@ -1554,13 +1593,22 @@ This does not differ from the current app-ads.txt model.
 ```
 
 **vMVPD B app-ads.txt** (`devsite.vMVPDB.com/app-ads.txt`):
+
 ```
 ssp.com, vwxyz, DIRECT
 ```
 
-**Scenario B.2 — Programmer A sells the slot within the vMVPD app:**
+##### Business Scenario B.2
 
-**OpenRTB declaration (by Programmer A):**
+Programmer A has rights to sell the ad slot; the ad is served into Programmer A's content within the vMVPD B app.
+
+- **App:** vMVPD B App (app bundle ID: 67890)
+- **Developer URL domain for the app:** devsite.vMVPDB.com
+- **Seller/Publisher:** Programmer A (publisher ID: abcde)
+- **Content Producer:** Programmer A
+
+**OpenRTB Declaration (by Programmer A):**
+
 ```json
 {
   "app": {
@@ -1575,21 +1623,29 @@ ssp.com, vwxyz, DIRECT
 ```
 
 **vMVPD B app-ads.txt** (`devsite.vMVPDB.com/app-ads.txt`):
+
 ```
 ssp.com, vwxyz, DIRECT
 inventorypartnerdomain=programmerA.com
 ```
 
 **Programmer A ads.txt** (`programmerA.com/ads.txt`):
+
 ```
 ssp.com, abcde, DIRECT
 ```
 
-#### Case C: Programmer-Owned App with MVPD Sign-In (TV Everywhere)
+#### Case C: Programmer-Owned App using MVPD Sign-In (TV Everywhere)
 
-Due to user login with vMVPD B's credentials in Programmer A's app, vMVPD B has the right to sell the ad slot. This is the reverse of Case B.2.
+**Business scenario:** Due to the user login to Programmer A's app with vMVPD B's login credentials, vMVPD B has rights to sell the ad slot within Programmer A's app. Note this is the reverse of Case B, Business Scenario B.2.
 
-**OpenRTB declaration (by vMVPD B):**
+- **App:** Programmer A App (app bundle ID: 12345)
+- **Developer URL domain for the app:** devsite.programmerA.com
+- **Seller/Publisher:** vMVPD B (publisher ID: vwxyz)
+- **Content Producer:** Programmer A
+
+**OpenRTB Declaration (by vMVPD B):**
+
 ```json
 {
   "app": {
@@ -1604,58 +1660,81 @@ Due to user login with vMVPD B's credentials in Programmer A's app, vMVPD B has 
 ```
 
 **Programmer A app-ads.txt** (`devsite.programmerA.com/app-ads.txt`):
+
 ```
 ssp.com, abcde, DIRECT
 inventorypartnerdomain=vmvpdB.com
 ```
 
 **vMVPD B ads.txt** (`vMVPDB.com/ads.txt`):
+
 ```
 ssp.com, vwxyz, DIRECT
 ```
 
 ### 3.5 Use Case Implementation Logic
 
-| Scenario | Action | Possible Outcomes |
+| Scenario | Do this… | Possible Outcomes |
 |---|---|---|
-| Bid request is app and **does not have** `app.inventorypartnerdomain` (Cases A, B.1) | Look up app-ads.txt at developer domain from app store record for `app.bundle` | No valid app-ads.txt found → **Nonparticipating**; Publisher ID + ad system not in file → **Unauthorized**; Publisher ID + ad system found → **Authorized** |
-| Bid request is app and **has** `app.inventorypartnerdomain` (Cases B.2, C) | Look up app-ads.txt at developer domain AND ads.txt at `app.inventorypartnerdomain` | No app-ads.txt found → **Inconclusive**; Publisher ID found directly in app-ads.txt → **Authorized**; app-ads.txt found but no matching `inventorypartnerdomain` directive → **Unauthorized**; Matching directive found but no ads.txt at that domain → **Inconclusive**; Publisher ID not in partner's ads.txt → **Unauthorized**; Publisher ID found in partner's ads.txt → **Authorized** |
+| Bid request is app\*, and **does not have** `$.app.inventorypartnerdomain` (Cases A, B.1) | Attempt lookup of **app-ads.txt** at developer domain retrieved from app store record for `$.app.bundle` | No valid app-ads.txt records found (store record cannot be found, no domain in store record, no app-ads.txt file, web server error, etc.) → **Nonparticipating inventory**; Valid app-ads.txt found & publisher ID + ad system not in file → **Unauthorized inventory**; Valid app-ads.txt found & publisher ID + ad system found → **Authorized inventory** |
+| Bid request is app\*, and **has** `$.app.inventorypartnerdomain` (Cases B.2, C) | Attempt lookup of **app-ads.txt** at developer domain retrieved from app store record for `$.app.bundle`; Attempt lookup of **ads.txt** at domain from `$.app.inventorypartnerdomain` field in bid request | No valid app-ads.txt records found → **Inconclusive: authorization cannot be determined**; **IF** valid app-ads.txt found & publisher ID + ad system found in app-ads.txt → **Authorized inventory**; **ELSE** valid app-ads.txt found but app-ads.txt does not contain an `inventorypartnerdomain` directive matching the domain from the bid request → **Unauthorized inventory**; app-ads.txt contains matching `inventorypartnerdomain` directive but no valid ads.txt found at that domain → **Inconclusive: authorization cannot be determined**; app-ads.txt contains matching directive, publisher ID + ad system not found in partner's ads.txt → **Unauthorized inventory**; app-ads.txt contains matching directive, publisher ID + ad system found in partner's ads.txt → **Authorized inventory** |
 
-*For site bid requests, substitute `site.inventorypartnerdomain` for `app.inventorypartnerdomain`.*
+*\* If bid request is site rather than app, same logic applies but look for `$.site.inventorypartnerdomain`.*
 
 ### 3.6 Implementation Guidelines for CTV/OTT
 
 #### CTV App Store Requirements
 
-1. Make the app store website publicly available on the web.
-2. Support the [OTT/CTV Store Assigned App Identification Guidelines](https://iabtechlab.com/wp-content/uploads/2020/08/IAB-Tech-Lab-OTT-store-assigned-App-Identification-Guidelines-2020.pdf) — store-assigned IDs must be publicly accessible.
-3. Follow the app-ads.txt standard — add meta tags to HTML pages publishing the developer website URL, bundle ID, and store ID.
+**Required:**
+
+1. To ensure the app-ads.txt information is verifiable across ad tech platforms, it is important to make the app store website publicly available on the web.
+
+2. CTV app stores are required to support the [OTT/CTV Store Assigned App Identification Guidelines](https://iabtechlab.com/wp-content/uploads/2020/08/IAB-Tech-Lab-OTT-store-assigned-App-Identification-Guidelines-2020.pdf) by ensuring their store-assigned IDs are publicly accessible from their store.
+
+3. CTV app stores are required to follow the [app-ads.txt standard](https://github.com/InteractiveAdvertisingBureau/ads.txt-app-ads.txt/blob/main/app-ads.txt.md) to add meta tags into the HTML page to publish the developer website URL, bundle ID, and store ID. The IAB Tech Lab's [demystifying app-ads.txt](https://iabtechlab.com/blog/demystifying-app-ads-txt/) guidance also defines other methods to publish a publisher's website URL, bundle ID, and store ID.
 
 #### Publisher Requirements
 
-1. Adopt the OTT/CTV Store Assigned App Identification Guidelines:
-   - Pass CTV app store assigned IDs in `app.bundle` (OpenRTB 2.5) or `app.storeid` (OpenRTB 3.0/AdCOM 1.0).
-   - Pass store URL in `app.storeurl`.
-2. App owners should publish their app-ads.txt on their developer website.
-3. App owners should declare `inventorypartnerdomain` for any partners with ownership of inventory within their app.
+**Required:**
 
-**Guidance on additional contextual signals that should not be stuffed into bundle fields:**
+1. Before publishers can adopt app-ads.txt for CTV inventory, they need to adopt the [OTT/CTV Store Assigned App Identification Guidelines](https://iabtechlab.com/wp-content/uploads/2020/08/IAB-Tech-Lab-OTT-store-assigned-App-Identification-Guidelines-2020.pdf). Per these guidelines, publishers are required to:
 
-| Signal | Correct Field |
+   a. Pass CTV app store-assigned IDs in the `app.bundle` field of OpenRTB 2.5 or the `app.storeid` field of OpenRTB 3.0/AdCOM 1.0.
+
+   b. Pass the store URL of the originating app in the `app.storeurl` field of OpenRTB 2.5 and OpenRTB 3.0/AdCOM 1.0.
+
+2. **App owners** should publish their app-ads.txt file on their developer website, following the [app-ads.txt standard](https://github.com/InteractiveAdvertisingBureau/ads.txt-app-ads.txt/blob/main/app-ads.txt.md). If publishers have already published app-ads.txt for mobile app inventory and there are different authorized seller IDs for their CTV app, they should publish a CTV-specific app-ads.txt file at a new domain specific for CTV app inventory.
+
+3. In addition, **App Owners** should declare within their app-ads.txt file the domain of **Inventory Partners** who own inventory within the **App Owner's** app using the `inventorypartnerdomain` directive. This should be the domain where the **Inventory Partner** hosts their ads.txt or app-ads.txt file.
+
+*\* If an app owner would prefer to list inventory partners' seller & reseller IDs directly within the app-ads.txt file, rather than leveraging the `inventorypartnerdomain` directive, this is also supported.*
+
+**Guidance on additional contextual signals — do not stuff into bundle fields:**
+
+| Signal | Correct OpenRTB Field |
 |---|---|
 | Channel or network within app | `content.producer.name` |
 | VOD vs. livestream | `content.livestream` |
 | Device make/model | `device.make` and `device.model` |
-| App store | `app.storeurl` |
+| App store | `app.storeurl` *(already required per the app-ads.txt standard)* |
+
+See also: [OTT/CTV User Agent Guidelines](https://iabtechlab.com/wp-content/uploads/2019/12/OTT_CTV_User_Agent_Preliminary_Guidelines_IABTechLab_2019-12.pdf)
 
 #### SSP/Exchange Requirements
 
-1. Implement `app.inventorypartnerdomain` and `site.inventorypartnerdomain` to support inventory partner domain pointers.
-2. Support publishers in providing CTV App IDs per the OTT/CTV Store Assigned App Identification Guidelines.
+**Required:**
+
+1. SSPs/Exchanges are required to implement the `app.inventorypartnerdomain` & `site.inventorypartnerdomain` fields from the site and app objects to support the passing of inventory partner domains for pointers to partner ads.txt files, where an inventory partner exists.
+
+2. SSPs/Exchanges should support publishers in providing CTV App IDs according to the [OTT/CTV Store Assigned App Identification Guidelines](https://iabtechlab.com/wp-content/uploads/2019/12/OTT_Store_Assigned_App_Identification_Guidelines_IABTechLab_2019-12.pdf)\* as well as assist them in passing additional contextual & environment signals (as noted in the Publisher Requirements section above) via the appropriate existing or extension OpenRTB fields.
+
+*\* Failure to comply with the guidelines will prevent the DSP from verifying the app-ads.txt information.*
 
 #### DSP Requirements
 
-1. Implement the app-ads.txt crawler according to standardized guidance from CTV app stores (or use a compliant service).
+**Required:**
+
+1. DSPs should implement their app-ads.txt crawler according to standardized guidance from CTV app stores (or use a service that adheres to those guidelines).
 
 ---
 
