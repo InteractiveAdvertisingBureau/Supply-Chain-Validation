@@ -207,7 +207,7 @@ The server-side wrapper has a client-side JS component but processes and forward
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -230,7 +230,7 @@ The server-side wrapper has a client-side JS component but processes and forward
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@server-side-wrapper.com",
   "sellers": [
     {
@@ -247,7 +247,7 @@ The server-side wrapper has a client-side JS component but processes and forward
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -272,7 +272,7 @@ The open bidding provider sits between the device and the SSP, routing the reque
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -295,7 +295,7 @@ The open bidding provider sits between the device and the SSP, routing the reque
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@open-bidding-provider.com",
   "sellers": [
     {
@@ -312,7 +312,7 @@ The open bidding provider sits between the device and the SSP, routing the reque
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -337,7 +337,7 @@ Two wrapper layers. The client-side wrapper initiates from the browser (hp=0 —
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -365,7 +365,7 @@ Two wrapper layers. The client-side wrapper initiates from the browser (hp=0 —
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@client-side-wrapper.com",
   "sellers": [
     {
@@ -382,7 +382,7 @@ Two wrapper layers. The client-side wrapper initiates from the browser (hp=0 —
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@server-side-wrapper.com",
   "sellers": [
     {
@@ -400,7 +400,7 @@ The client side wrapper is controlled by the publisher, the server-side wrapper 
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -425,7 +425,7 @@ The publisher's own domain initiates the Prebid request directly. Publisher is n
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -444,7 +444,7 @@ The publisher controlls the client side wrapper, so no hp=0 node is required.
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -469,7 +469,7 @@ The publisher ad management platform operates both the client-side JS and a serv
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -492,7 +492,7 @@ The publisher ad management platform operates both the client-side JS and a serv
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@publisher-ad-management-platform.com",
   "sellers": [
     {
@@ -509,7 +509,7 @@ The publisher ad management platform operates both the client-side JS and a serv
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -534,7 +534,7 @@ The publisher ad management platform's JS initiates the request (hp=1 — in pay
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -562,7 +562,7 @@ The publisher ad management platform's JS initiates the request (hp=1 — in pay
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@publisher-ad-management-platform.com",
   "sellers": [
     {
@@ -579,7 +579,7 @@ The publisher ad management platform's JS initiates the request (hp=1 — in pay
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@yield-optimization-intermediary.com",
   "sellers": [
     {
@@ -597,7 +597,7 @@ The publisher ad management platform's JS initiates the request (hp=1 — in pay
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -626,7 +626,7 @@ The mobile SDK does two jobs: client-side connection and initial payload constru
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -644,7 +644,7 @@ The mobile SDK does two jobs: client-side connection and initial payload constru
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@mobile-sdk.com",
   "sellers": [
     {
@@ -669,7 +669,7 @@ DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app developer. No hp=0 no
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -692,7 +692,7 @@ DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app developer. No hp=0 no
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@mobile-sdk.com",
   "sellers": [
     {
@@ -709,7 +709,7 @@ DSP pays SSP. SSP pays Mobile SDK. Mobile SDK pays the app developer. No hp=0 no
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -734,7 +734,7 @@ The SSP pays the publisher directly, bypassing the SDK in the payment chain. Mob
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -757,7 +757,7 @@ The SSP pays the publisher directly, bypassing the SDK in the payment chain. Mob
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@mobile-sdk.com",
   "sellers": [
     {
@@ -776,7 +776,7 @@ The SSP pays the publisher directly, bypassing the SDK in the payment chain. Mob
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -805,7 +805,7 @@ SSAI platform stitches ads server-side (hp=0). CTV ad server manages the auction
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -833,7 +833,7 @@ SSAI platform stitches ads server-side (hp=0). CTV ad server manages the auction
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssai-platform.com",
   "sellers": [
     {
@@ -850,7 +850,7 @@ SSAI platform stitches ads server-side (hp=0). CTV ad server manages the auction
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ctv-ad-server.com",
   "sellers": [
     {
@@ -868,7 +868,7 @@ The publisehr controls the account with the SSAI platform and with the ad server
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -893,7 +893,7 @@ SSAI and ad server are operated by the same company. They collapse into a single
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -916,7 +916,7 @@ SSAI and ad server are operated by the same company. They collapse into a single
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssai-and-ad-server-operator.com",
   "sellers": [
     {
@@ -933,7 +933,7 @@ SSAI and ad server are operated by the same company. They collapse into a single
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -958,7 +958,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -992,7 +992,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@publisher-owned-ssai.com",
   "sellers": [
     {
@@ -1009,7 +1009,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@primary-ad-server.com",
   "sellers": [
     {
@@ -1026,7 +1026,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@content-owner-ad-server.com",
   "sellers": [
     {
@@ -1043,7 +1043,7 @@ Publisher-owned SSAI initiates (hp=0). Primary ad server manages the request (hp
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -1068,7 +1068,7 @@ One of two parallel bid requests generated from the same ad break. This path rep
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -1096,7 +1096,7 @@ One of two parallel bid requests generated from the same ad break. This path rep
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssai-vendor.com",
   "sellers": [
     {
@@ -1111,7 +1111,7 @@ One of two parallel bid requests generated from the same ad break. This path rep
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@app-owner-ad-server.com",
   "sellers": [
     {
@@ -1128,7 +1128,7 @@ One of two parallel bid requests generated from the same ad break. This path rep
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -1153,7 +1153,7 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -1180,7 +1180,7 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssai-vendor.com",
   "sellers": [
     {
@@ -1195,7 +1195,7 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@inventory-share-partner-ad-server.com",
   "sellers": [
     {
@@ -1212,7 +1212,7 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp.com",
   "sellers": [
     {
@@ -1236,7 +1236,7 @@ The primary ad server forwards to a secondary ad server to access differentiated
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -1269,7 +1269,7 @@ The primary ad server forwards to a secondary ad server to access differentiated
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "ssaip-pub-003",
@@ -1284,7 +1284,7 @@ The primary ad server forwards to a secondary ad server to access differentiated
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "coas-ssaip-002",
@@ -1299,7 +1299,7 @@ The primary ad server forwards to a secondary ad server to access differentiated
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "pcas-coas-002",
@@ -1314,7 +1314,7 @@ The primary ad server forwards to a secondary ad server to access differentiated
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "ispas-ssp-001",
@@ -1337,7 +1337,7 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
 {
   "source": {
     "schain": {
-      "ver": "1.0",
+      "ver": "1.1",
       "complete": 1,
       "nodes": [
         {
@@ -1370,7 +1370,7 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssai-platform.com",
   "sellers": [
     {
@@ -1387,7 +1387,7 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@primary-ctv-ad-server.com",
   "sellers": [
     {
@@ -1404,7 +1404,7 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp-1.com",
   "sellers": [
     {
@@ -1421,7 +1421,7 @@ SSP-1 routes to SSP-2 for additional bid density or deal access. Both SSPs are h
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "contact_email": "adops@ssp-2.com",
   "sellers": [
     {
@@ -2250,7 +2250,7 @@ The sales house has three types of arrangements:
 **sales-house.com/sellers.json:**
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "1",
@@ -2386,7 +2386,7 @@ An exchange sells the same publisher via two different supply paths: direct head
 **exchange.com/sellers.json:**
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "180000",
@@ -2408,7 +2408,7 @@ An exchange sells the same publisher via two different supply paths: direct head
 **eb-exchange.com/sellers.json:**
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "sellers": [
     {
       "seller_id": "pub-1234",
