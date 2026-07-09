@@ -65,6 +65,10 @@ Together, these three mechanisms allow a DSP to answer: *Who authorized the sale
 
 As part of a broader effort to eliminate the ability to profit from invalid traffic, ad fraud, and counterfeit inventory in the open digital advertising ecosystem, the SupplyChain object enables buyers to see all parties who have taken custody of a bid request.
 
+Supply Chain 1.1 and on discloses any entity that has custody of the bid request – specifically entities that have the ability to initiate or route bid requests to another entity. We can label these systems “technical hops”. This does not include entities that do not take full custody of the bid request. Entities that only provide data or recommendations but do not take control of the request are out of scope. 
+
+All entities that were included in Supply Chain 1.0 should also continue to be included, regardless of whether they are “technical hops” that take custody of the bid request.
+
 Ads.txt has been extremely successful in allowing publishers and app makers to define who is authorized to sell a given set of impressions via the programmatic marketplace. Ads.txt does not however make any attempt at revealing or authorizing all parties that are part of the transacting of those impressions. This information can be important to buyers for a number of reasons including transparency of the supply chain, ensuring that all intermediaries are entities with which the buyer wants to transact and that inventory is purchased as directly as possible.
 
 The [SupplyChain object](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/develop/2.6.md#3225---object-supplychain-) is composed primarily of a set of nodes where each node represents a specific entity that participates in the transacting of inventory. The entire chain of nodes using [Object: SupplyChainNode](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/develop/2.6.md#3226---object-supplychainnode-) from beginning to end represents all entities who took custody of a given bid request.
