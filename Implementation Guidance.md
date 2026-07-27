@@ -89,7 +89,7 @@ Version 1.1
 - hp=0 nodes reflect the order of the request, which may not be in the same order of the payment
 - Where the same company is two hp=0 nodes in a row, collapse nodes. Where there are two nodes of the same company but one is hp=1 and the other is hp=0, both nodes should be enumerated. If both are hp=1, both should be enumerated. 
 - Order reflects the outbound sequence, not the inbound sequence
-- All third parties (e.g., not the end publisher) that take control of the bid request must be listed in the schain regardless of whether that third-party code is server-side or client-side.  
+- The schain lists the third parties (e.g., not the end publisher) that take control of the bid request, regardless of whether that third-party code is server-side or client-side. The specification is a vocabulary for communicating what happened. It does not oblige any entity to disclose itself.  
 - Mediation layers (e.g. mobile) are treated the same as web for the purposes of this specification
 - No ads.txt file will be required for hp=0 nodes, but an entry in the corresponding sellers.json will be strongly recommended.
 - Sellers.json is strongly recommended for all nodes
