@@ -1777,10 +1777,9 @@ For the purposes of sellers.json and SupplyChain, the seller ID must represent a
 - For a given payment handling node (hp=1), the name associated with a seller ID (from sellers.json) on a given advertising system should match the advertising system in the preceding hp=1 node. Otherwise, it implies a break in the chain.
 - Payment handling nodes require corresponding ads.txt records for a given domain/app, and should be present for upstream nodes in the SupplyChain for that domain/app. Note that this is expanded guidance from the existing ads.txt spec, but should be considered a best practice.
 - DSPs could do spot checks and ask publishers if a supply chain looks valid with how the publisher expects their inventory is sold. They can also use SupplyChain information to inform the total inventory sold via a particular chain or intermediary for any arbitrary length of time.
-- In cases where the ‘complete’ attribute is set to 1 (payment complete), you can check that the entity name for the first node is consistent with the known owner of the site or app.
-- When `complete=1`, check that the entity name for the first node is consistent with the known owner of the site or app.
-- When `complete=1`, check that the first node has a `seller_type` of PUBLISHER. If it does not, there must be one or more missing nodes.
-- Check that the first node is listed as a DIRECT seller in the publisher's ads.txt. If it is not, either the actual first node has been removed (chain has been tampered with), or the publisher has incorrectly listed the record as RESELLER.
+- In cases where the ‘complete’ attribute is set to 1 (payment complete) or 2 (payment and tech complete), you can check that the entity name for the first hp=1 node is consistent with the known owner of the site or app.
+- When `complete=1` or `complete=2`, check that the first hp=1 node has a `seller_type` of PUBLISHER. If it does not, there must be one or more missing nodes.
+- Check that the first hp=1 node is listed as a DIRECT seller in the publisher's ads.txt. If it is not, either the actual first hp=1 node has been removed (chain has been tampered with), or the publisher has incorrectly listed the record as RESELLER. Note that hp=0 nodes are not required to have ads.txt records (see Supporting SupplyChain 1.1 below); in a version 1.0 chain, where all nodes are payment handling, the first hp=1 node is the first node.
 
 #### Supporting SupplyChain 1.1
 - Supply Chain version 1.1 and above, additional sellers.json entries for non-payment handling entities are available. 
