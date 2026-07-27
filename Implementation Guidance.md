@@ -87,7 +87,8 @@ Version 1.0
 Version 1.1
 - All original rules continue to apply to updated versions
 - hp=0 nodes reflect the order of the request, which may not be in the same order of the payment
-- Where the same company is two hp=0 nodes in a row, collapse nodes. Where there are two nodes of the same company but one is hp=1 and the other is hp=0, both nodes should be enumerated. If both are hp=1, both should be enumerated. 
+- Where the same company is two hp=0 nodes in a row, collapse nodes. Where there are two nodes of the same company but one is hp=1 and the other is hp=0, both nodes should be enumerated. If both are hp=1, both should be enumerated. Where a single company's technical custody and payment handling occur within one integrated system (for example, an SDK and the exchange that operates it), a single node is sufficient: hp=1 where the system handles payment for the transaction, hp=0 otherwise. The enumeration of both an hp=1 and an hp=0 node for the same company applies where that company operates distinct systems in the chain. 
+- A company may appear with different hp values on different paths for the same inventory: an advertising system that handles payment for some demand partners (hp=1) and acts purely as a technology provider for demand partners that pay the seller directly (hp=0) should set hp per transaction path. Both representations are correct for their respective paths. 
 - Order reflects the outbound sequence, not the inbound sequence
 - All third parties (e.g., not the end publisher) that take control of the bid request must be listed in the schain regardless of whether that third-party code is server-side or client-side.  
 - Mediation layers (e.g. mobile) are treated the same as web for the purposes of this specification
@@ -1792,7 +1793,7 @@ For the purposes of sellers.json and SupplyChain, the seller ID must represent a
 
 - DSPs can spot check by asking publishers to confirm when a sellers.json file claims a specific seller ID represents that publisher directly.
 - Look for irregular patterns: a 1:1 correlation between publisher ID and domain/app across the board suggests incorrect use of seller ID. Multiple apparently unrelated apps/domains observed for a single seller ID with `seller_type` set to PUBLISHER is also suspicious.
-- General consistency should be observed between DIRECT seller accounts in a site's ads.txt and the `seller_type`, `is_passthrough`, and entity name found in sellers.json for a given advertising system.
+- General consistency should be observed between DIRECT seller accounts in a site's ads.txt and the `seller_type`, `is_passthrough`, and entity name found in sellers.json for a given advertising system. Note that paid and passthrough relationships may coexist for the same entity pair: a publisher's ads.txt or app-ads.txt may legitimately carry a DIRECT line for an advertising system (covering traffic that system pays for) while the same advertising system's sellers.json also carries an `is_passthrough=1` entry for that publisher under a separate seller_id (covering traffic transacted under a direct payment arrangement with a downstream partner). This coexistence is not an inconsistency.
 
 ### 4.7 Publisher Responsibilities
 
