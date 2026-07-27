@@ -93,6 +93,7 @@ Version 1.1
 - Mediation layers (e.g. mobile) are treated the same as web for the purposes of this specification
 - No ads.txt file will be required for hp=0 nodes, but an entry in the corresponding sellers.json will be strongly recommended.
 - Sellers.json is strongly recommended for all nodes
+- A receiver that copies a SupplyChain object must preserve all received nodes, including hp=0 nodes, when appending its own node. Removing or omitting a node created by an upstream party is invalid, in the same way that copying a chain without appending oneself is invalid under the Version 1.0 rules. A chain from which a received custody node has been removed must not claim to include all custody nodes. 
 - Version 1.1 and onward will use a new enumeration to denote that both paid and unpaid nodes are included. 
 
 
@@ -1787,6 +1788,7 @@ For the purposes of sellers.json and SupplyChain, the seller ID must represent a
 - Existing sellers.json entries don’t need to have their details changed, new fields should be added as needed.
 - The order of the Supply Chain Nodes for non-payment handling entities should in the order of the bid request. Implementers should expect to see one or more hp=0 nodes in front of the first payment handling node. hp=0 nodes after the first payment handling entity will also not be uncommon.  
 - DSP schain validation logic should skip hp=0 nodes; but should instead look for is_passthrough=1 and a corresponding entry in the sellers.json file of the appropriate node.
+- During the transition period, buyers should not penalize `ver="1.1"` chains under version 1.0 validation rules: hp=0 nodes in a version 1.1 chain are not unauthorized merely because they lack ads.txt records, and a version 1.1 chain is not longer in payment terms than the equivalent version 1.0 chain — the number of hp=1 nodes is unchanged. Sellers disclosing custody nodes should not be at a disadvantage relative to sellers that have not yet adopted version 1.1.
 
 #### Validating sellers.json information
 
