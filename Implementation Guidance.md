@@ -89,7 +89,7 @@ Version 1.1
 - hp=0 nodes reflect the order of the request, which may not be in the same order of the payment
 - Where the same company is two hp=0 nodes in a row, collapse nodes. Where there are two nodes of the same company but one is hp=1 and the other is hp=0, both nodes should be enumerated. If both are hp=1, both should be enumerated. 
 - Order reflects the outbound sequence, not the inbound sequence
-- All third parties (e.g., not the end publisher) that take control of the bid request must be listed in the schain regardless of whether that third-party code is server-side or client-side.  
+- The schain lists the third parties (e.g., not the end publisher) that take control of the bid request, regardless of whether that third-party code is server-side or client-side. The specification is a vocabulary for communicating what happened. It does not oblige any entity to disclose itself.  
 - Mediation layers (e.g. mobile) are treated the same as web for the purposes of this specification
 - No ads.txt file will be required for hp=0 nodes, but an entry in the corresponding sellers.json will be strongly recommended.
 - Sellers.json is strongly recommended for all nodes
@@ -1748,7 +1748,7 @@ See also: [OTT/CTV User Agent Guidelines](https://iabtechlab.com/wp-content/uplo
 
 ### 4.1 What Are sellers.json and SupplyChain?
 
-sellers.json and SupplyChain are the mechanisms to identify all intermediaries that participate in the flow of money from the buying platform back to the publisher. They do not include any intermediary that does not participate in money flow — systems paid a flat fee for their services but that do not pay upstream sellers are not included. In cases of complicated supply chains, this enables increased transparency and the ability to identify and prevent fraudulent or otherwise unacceptable supply sources, according to the business policies of the consuming advertising system.
+sellers.json and SupplyChain are the mechanisms to identify all intermediaries that participate in the flow of money from the buying platform back to the publisher. Under version 1.0 they describe the payment chain only, so an intermediary that does not participate in money flow is not included. From version 1.1 a chain can also describe intermediaries that take custody of the request without handling payment, using nodes with `hp=0`. In cases of complicated supply chains, this enables increased transparency and the ability to identify and prevent fraudulent or otherwise unacceptable supply sources, according to the business policies of the consuming advertising system.
 
 ### 4.2 VAST and Tag-Based Requests
 
@@ -1758,7 +1758,7 @@ Advertising systems should support receiving supply chain details from the Suppl
 
 ### 4.3 SSAI Vendors
 
-All intermediaries that are part of the chain of payments — ranging from the buying system to the publisher — are expected to be included in the SupplyChain. If an SSAI vendor is acting as an intermediary in the payment chain, they should be included. If an SSAI vendor is acting purely as an ad serving vendor — paid an ad serving fee by the publisher and not involved in the media money flow — they would not be listed.
+All intermediaries that are part of the chain of payments — ranging from the buying system to the publisher — are expected to be included in the SupplyChain. If an SSAI vendor is acting as an intermediary in the payment chain, they should be included. If an SSAI vendor is acting purely as an ad serving vendor, paid an ad serving fee by the publisher and not involved in the media money flow, they are not part of the payment chain. Under version 1.0 they would not be listed. From version 1.1 they can appear as an `hp=0` node.
 
 ### 4.4 Correctness and Fraud
 
@@ -1827,7 +1827,7 @@ to hold a contract directly with this entity?
 
 ### 4.10 Header Bidding
 
-Technology vendors that are not in the direct payment chain between the buying system and the publisher should not be listed in the SupplyChain object. There is also no need to assign a seller ID to these vendors.
+Under version 1.0, technology vendors that are not in the direct payment chain between the buying system and the publisher are not listed in the SupplyChain object and need no seller ID. From version 1.1 they can appear as `hp=0` nodes. No ads.txt file is required for `hp=0` nodes and an entry in the corresponding sellers.json is strongly recommended.
 
 ### 4.11 Worked Examples
 
