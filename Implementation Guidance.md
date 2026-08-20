@@ -421,7 +421,7 @@ The client side wrapper is controlled by the publisher, the server-side wrapper 
 
 ### WEB-4: Device > Prebid JS > SSP > DSP
 
-The publisher's own domain initiates the Prebid request directly. Publisher is named as node 1 because they are directly initiating — no intermediary wrapper sits above them.
+The publisher's own domain initiates the Prebid request directly. The SSP is the only node; the publisher is the seller identified by that node in the SSP's sellers.json, not a node itself (see §4.7). No intermediary wrapper sits above them.
 
 #### OpenRTB 2.6 schain object
 
@@ -1109,6 +1109,8 @@ One of two parallel bid requests generated from the same ad break. This path rep
       "domain": "appowner.com",
       "seller_type": "PUBLISHER"
     }
+  ]
+}
 ```
 
 #### app-owner-ad-server.com/sellers.json
@@ -1188,11 +1190,13 @@ Second of two parallel bid requests from the same ad break. Same SSAI originator
   "contact_email": "adops@ssai-vendor.com",
   "sellers": [
     {
-      "seller_id": "ssaiv-appowner-001",
-      "name": "Example App Owner LLC",
-      "domain": "appowner.com",
+      "seller_id": "ssaiv-invpartner-001",
+      "name": "Inventory Share Partner LLC",
+      "domain": "inventorysharepartner.com",
       "seller_type": "PUBLISHER"
     }
+  ]
+}
 ```
 
 #### inventory-share-partner-ad-server.com/sellers.json
@@ -1314,14 +1318,14 @@ The primary ad server forwards to a secondary ad server to access differentiated
   ]
 }
 ```
-#### content-owner-ad-server.com/sellers.json
+#### ssp.com/sellers.json
 
 ```json
 {
   "version": "1.1",
   "sellers": [
     {
-      "seller_id": "ispas-ssp-001",
+      "seller_id": "pcas-ssp-002",
       "name": "Example Content Owner LLC",
       "domain": "contentowner.com",
       "seller_type": "PUBLISHER"
@@ -1774,10 +1778,9 @@ For the purposes of sellers.json and SupplyChain, the seller ID must represent a
 
 #### Validating SupplyChain 1.0 information
 
-- For a given payment handling node (hp=1), the name associated with a seller ID (from sellers.json) on a given advertising system should match the advertising system in the preceding hp=1 node. Otherwise, it implies a break in the chain.
+- For a given payment handling node (hp=1), the `domain` associated with that seller ID in the advertising system's sellers.json should match the `asi` of the preceding hp=1 node. Otherwise, it implies a break in the chain.
 - Payment handling nodes require corresponding ads.txt records for a given domain/app, and should be present for upstream nodes in the SupplyChain for that domain/app. Note that this is expanded guidance from the existing ads.txt spec, but should be considered a best practice.
 - DSPs could do spot checks and ask publishers if a supply chain looks valid with how the publisher expects their inventory is sold. They can also use SupplyChain information to inform the total inventory sold via a particular chain or intermediary for any arbitrary length of time.
-- In cases where the ‘complete’ attribute is set to 1 (payment complete), you can check that the entity name for the first node is consistent with the known owner of the site or app.
 - When `complete=1`, check that the entity name for the first node is consistent with the known owner of the site or app.
 - When `complete=1`, check that the first node has a `seller_type` of PUBLISHER. If it does not, there must be one or more missing nodes.
 - Check that the first node is listed as a DIRECT seller in the publisher's ads.txt. If it is not, either the actual first node has been removed (chain has been tampered with), or the publisher has incorrectly listed the record as RESELLER.
