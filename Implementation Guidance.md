@@ -89,11 +89,11 @@ Version 1.1
 - hp=0 nodes reflect the order of the request, which may not be in the same order of the payment
 - Where the same company is two hp=0 nodes in a row, collapse nodes. Where there are two nodes of the same company but one is hp=1 and the other is hp=0, both nodes should be enumerated. If both are hp=1, both should be enumerated. 
 - Order reflects the outbound sequence, not the inbound sequence
-- All third parties (e.g., not the end publisher) that take control of the bid request must be listed in the schain regardless of whether that third-party code is server-side or client-side.  
+- All third-party entities (i.e., any legal entity other than the end publisher) that participate in initiating, constructing, or routing the bid request must be listed in the schain, regardless of whether that entity's system operates server-side or client-side. Participation means the entity itself takes part in the request: obtaining or licensing software from a third party does not by itself make that third party a participant. Software that the publisher runs and operates itself therefore creates no additional node, while the same software operated as a service by a third party does.  
 - Mediation layers (e.g. mobile) are treated the same as web for the purposes of this specification
 - No ads.txt file will be required for hp=0 nodes, but an entry in the corresponding sellers.json will be strongly recommended.
 - Sellers.json is strongly recommended for all nodes
-- Version 1.1 and onward will use a new enumeration to denote that both paid and unpaid nodes are included. 
+- Version 1.1 and onward use `complete=2` to denote that both paid and unpaid nodes are included. `complete=2` asserts that every third-party entity that participated in the bid request is present in the `nodes` array. Software the publisher runs and operates itself is out of scope for this assertion, and its absence does not falsify it. 
 
 
 ### Placement in the Bid Request
@@ -442,7 +442,7 @@ The publisher's own domain initiates the Prebid request directly. The SSP is the
   }
 }
 ```
-The publisher controlls the client side wrapper, so no hp=0 node is required.
+The publisher runs and operates the wrapper itself, so no third-party entity participates in the request and no hp=0 node is created. Contrast WEB-3, where the client-side wrapper is operated by a third party and is listed.
 
 #### ssp.com/sellers.json
 
@@ -1830,7 +1830,7 @@ to hold a contract directly with this entity?
 
 ### 4.10 Header Bidding
 
-Technology vendors that are not in the direct payment chain between the buying system and the publisher should not be listed in the SupplyChain object. There is also no need to assign a seller ID to these vendors.
+Prior to SupplyChain 1.1, technology vendors that were not in the direct payment chain between the buying system and the publisher were not listed in the SupplyChain object. From version 1.1 onward, any third-party entity that participates in initiating, constructing, or routing the bid request must be listed with `hp=0`, whether or not it participates in the flow of payment. Software deployed and operated by the publisher itself does not create a node, and no seller ID need be assigned for it.
 
 ### 4.11 Worked Examples
 
